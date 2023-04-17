@@ -2,3 +2,4 @@ Flask
 Flask_SocketIO
 celery==4.4.2
 amqp
+redis

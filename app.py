@@ -12,12 +12,12 @@ app.config['SECRET_KEY'] = 'there is no secret'
 # CELERY_BROKER_URL is the URL where the message broker (RabbitMQ) is running
 # CELERY_RESULT_BACKEND is required to keep track of task and store the status
 app.config.update(
-CELERY_BROKER_URL = 'amqp://localhost//',  
-CELERY_RESULT_BACKEND='rpc://'
+CELERY_BROKER_URL="redis://127.0.0.1:6379/0",
+CELERY_RESULT_BACKEND=f"redis://127.0.0.1:6379/0",
 )
 
 # integrates Flask-SocketIO with the Flask application
-socketio = SocketIO(app, message_queue='amqp://')
+socketio = SocketIO(app, message_queue='redis://')
 
 # the app is passed to meke_celery function, this function sets up celery in order to integrate with the flask application
 celery = make_celery(app)
@@ -44,7 +44,7 @@ def name_handler(message):
 # message_to_client() function is meant to run as background tasks, so it needs to be decorated with the celery.task decorator 
 @celery.task(name="task.message")
 def message_to_client(name, room):
-	socketio = SocketIO(message_queue='amqp://')
+	socketio = SocketIO(message_queue='redis://')
 	count = 5
 	while count > 1 :
 		count -= 1
