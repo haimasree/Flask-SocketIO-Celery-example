@@ -48,9 +48,9 @@ def message_to_client(name, room):
 	count = 5
 	while count > 1 :
 		count -= 1
-		socketio.emit('response', {'count': count}, namespace='/test', room=room)
+		socketio.emit('response', {'count': count}, namespace='/test')
 		time.sleep(1)
-	socketio.emit('response', {'name': name}, namespace='/test', room=room)
+	socketio.emit('response', {'name': name}, namespace='/test')
 
 
 
